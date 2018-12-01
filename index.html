@@ -55,13 +55,13 @@
       notification.classList.remove('fadeout');
       notification.classList.add('fadein');
       setTimeout(function() {
+        setTimeout(function() {
+          donationActive = false;
+          checkDonations();
+        }, delayTime);
         notification.classList.remove('fadein');
         notification.classList.add('fadeout');
       }, showTime);
-      setTimeout(function() {
-        donationActive = false;
-        checkDonations();
-      }, showTime + delayTime);
     }
   }
 
