@@ -35,8 +35,12 @@
   var donationsQueue = [];
   var donationActive = false;
 
-  var token = location.href.substr(location.href.indexOf('#') + 1);
-  console.log(token);
+  var token = null;
+  if(location.href.indexOf('#') != -1)
+    token = location.href.substr(location.href.indexOf('#') + 1);
+  else {
+    document.body.classList.add('background');
+  }
 
   function checkDonations() {
     if(!donationActive) {

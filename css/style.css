@@ -3,9 +3,13 @@
 body {
   margin: 0;
   padding: 0;
-  background: url("http://www.grandtheftautoforever.com/blog/wp-content/uploads/2014/11/gta-5-ps4-xbox-one-screenshots-041.jpg") no-repeat center/cover;
   font-family: 'IBM Plex Sans', sans-serif;
 }
+
+.background {
+  background: url("http://www.grandtheftautoforever.com/blog/wp-content/uploads/2014/11/gta-5-ps4-xbox-one-screenshots-041.jpg") no-repeat center/cover;
+}
+
 .wrapper {
   display: flex;
   width: 100vw;
