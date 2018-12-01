@@ -44,9 +44,9 @@
 
   function checkDonations() {
     if(!donationActive) {
-      donationActive = true;
       if(!donationsQueue.length)
         return;
+      donationActive = true;
       var donation = donationsQueue.shift();
       console.log(donation);
       text.innerHTML = donation.message;
