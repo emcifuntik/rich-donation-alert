@@ -25,7 +25,7 @@
 <script>
   var notification = document.querySelector('.notification');
   var title = document.querySelector('h2');
-  var name = document.querySelector('.name');
+  var userName = document.querySelector('.name');
   var amount = document.querySelector('.amount');
   var text = document.querySelector('.text');
 
@@ -40,16 +40,19 @@
 
   function checkDonations() {
     if(!donationActive) {
+      donationActive = true;
       var donation = donationsQueue.shift();
-      amount.innerHTML = donation.amount_formatted + ' руб.';
-      name.innerHTML = donation.username;
+      console.log(donation);
       text.innerHTML = donation.message;
+      userName.innerHTML = donation.username;
+      amount.innerHTML = donation.amount_formatted + ' руб.';
       notification.classList.remove('fadeout');
       notification.classList.add('fadein');
       setTimeout(function() {
         notification.classList.remove('fadein');
         notification.classList.add('fadeout');
         setTimeout(function() {
+          donationActive = false;
           checkDonations();
         }, delayTime);
       }, showTime);
