@@ -57,11 +57,11 @@
       setTimeout(function() {
         notification.classList.remove('fadein');
         notification.classList.add('fadeout');
-        setTimeout(function() {
-          donationActive = false;
-          checkDonations();
-        }, delayTime);
       }, showTime);
+      setTimeout(function() {
+        donationActive = false;
+        checkDonations();
+      }, showTime + delayTime);
     }
   }
 
