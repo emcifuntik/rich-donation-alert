@@ -100,6 +100,7 @@
 			console.log('Received new message');
 			new_donation = JSON.parse(msg);
       donationsQueue.push(new_donation);
+      console.log(new_donation);
       checkDonations();
 			// if (alerts_id_to_show[new_donation.alert_type].indexOf(new_donation.id) == -1) {
 			// 	alerts_array[String(new_donation.alert_type)].push(new_donation);
