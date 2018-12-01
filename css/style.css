@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,600');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url("http://www.grandtheftautoforever.com/blog/wp-content/uploads/2014/11/gta-5-ps4-xbox-one-screenshots-041.jpg") no-repeat center/cover;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.wrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: flex-end;
+  justify-content: center;
+}
+.notification {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 500px;
+  background: rgba(34, 34, 34, 0.94);
+  box-shadow: 0 0 100px 20px rgb(34, 34, 34);
+  color: #eee;
+  border-radius: 10px;
+  height: 150px;
+  margin-bottom: 100px;
+  transition: all .3s;
+  font-size: 24px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  height: 100%;
+}
+
+.notification h2 {
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: .7;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+.notification .name {
+  opacity: .8;
+  display: block;
+  width: 230px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.notification .amount {
+  opacity: .8;
+  font-weight: 600;
+  display: block;
+}
+
+.notification .text {
+  opacity: .8;
+  font-weight: 300;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.notification.fadein {
+  opacity: 1;
+}
+
+.notification.fadeout {
+  opacity: 0;
+}

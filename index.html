@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>DonationAlert by fronty</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrapper">
+  <div class="notification fadeout">
+    <img src="https://i.imgur.com/hQergJi.gif" alt="">
+    <div class="info">
+      <h2>new donation</h2>
+      <span class="name">{userlongdick}</span>
+      <span class="amount">
+        50$
+      </span>
+      <span class="text">
+        Привет всем, я Женёк
+      </span>
+    </div>
+  </div>
+</div>
+<script src="/js/socket.io-2.0.1.js" id="socketIo"></script>
+<script>
+  var notification = document.querySelector('.notification');
+  var title = document.querySelector('h2');
+  var name = document.querySelector('.name');
+  var amount = document.querySelector('.amount');
+  var text = document.querySelector('.text');
+
+  var showTime = 10000;
+  var delayTime = 1000;
+
+  var donationsQueue = [];
+  var donationActive = false;
+
+  var token = location.href.substr(location.href.indexOf('#') + 1);
+  console.log(token);
+
+  function checkDonations() {
+    if(!donationActive) {
+      var donation = donationsQueue.shift();
+      amount.innerHTML = donation.amount_formatted + ' руб.';
+      name.innerHTML = donation.username;
+      text.innerHTML = donation.message;
+      notification.classList.remove('fadeout');
+      notification.classList.add('fadein');
+      setTimeout(function() {
+        notification.classList.remove('fadein');
+        notification.classList.add('fadeout');
+        setTimeout(function() {
+          checkDonations();
+        }, delayTime);
+      }, showTime);
+    }
+  }
+
+	function initWsConnection() {
+    socket = io('wss://socket.donationalerts.ru:443', {
+      reconnection: true,
+      reconnectionDelayMax: 5000,
+      reconnectionDelay: 1000,
+    });
+	}
+	initWsConnection();
+
+	if (socket !== null) {
+		socket.on('connect', function(msg){
+			console.log('WS: connected');
+			socket.emit('add-user', { token: token, type: 'alert_widget' });
+			console.log('Connected to WS server');
+		});
+
+		socket.on('connect_error', function(msg){
+			console.log('WS: connection_error');
+			console.log('Could not connect to WS server');
+		});
+
+		socket.on('connect_timeout', function(msg){
+			console.log('WS: connection_timeout');
+          console.log('Connection to WS server is timed out');
+		});
+
+		socket.on('reconnect', function(msg){
+			console.log('WS: reconnected');
+			console.log('Reconnected to WS server');
+		});
+
+		socket.on('donation', function(msg){
+			console.log('Received new message');
+			new_donation = JSON.parse(msg);
+      donationsQueue.push(new_donation);
+      checkDonations();
+			// if (alerts_id_to_show[new_donation.alert_type].indexOf(new_donation.id) == -1) {
+			// 	alerts_array[String(new_donation.alert_type)].push(new_donation);
+			// 	console.log('Added message to the queue');
+			// 	console.log('Queue items count of type '+new_donation.alert_type+': '+alerts_array[String(new_donation.alert_type)].length);
+			// };
+			// if (dPoll.poll_is_available == true && dPoll.is_displaying == true) {
+			// 	dPoll.getData(false, true);
+			// }
+		});
+
+		socket.on('update-alert_widget', function(msg){
+			alert_data = JSON.parse(msg);
+			console.log(alert_data);
+			if(typeof alert_data['_additional'] !== 'undefined'){
+				if(typeof alert_data['_additional'].reload !== 'undefined'){
+					if (alert_data['_additional'].reload == 1) {
+						location.reload();
+					}
+				}
+			}
+      console.log(alert_data);
+			// initWidget(alert_data);
+			// updateData();
+		});
+
+		socket.on('update-user_general_widget_settings', function(msg){
+      console.log(msg);
+			//handleGeneralWidgetSettings(msg);
+		});
+
+		socket.on('alert-show', function(msg){
+			var msg = JSON.parse(msg);
+			if (msg.action == 'skip') {
+				//skipCurrentAlert(msg.alert_id, msg.alert_type);
+			}
+		})
+	}
+
+	</script>
+  
+
+</body>
+
+</html>
